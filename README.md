@@ -45,4 +45,36 @@ Tradeoffs:
   - Scalability -> high cost
   - Testability -> lower simplicity
   - Complexity
-- 
+
+### Comparing Vertical Slice Architecture to Other Popular Styles
+- Layered Architecture
+  - Maintaniblity +-
+  - Testability   +-
+  - Cost          ++
+  - Simplicity    ++
+  - Scalability   --
+
+- Clean Architecture
+  - Maintaniblity +
+  - Testability   +-
+  - Cost          +
+  - Simplicity    +
+  - Scalability   --
+
+- Microservices
+  - Maintaniblity ++
+  - Testability   ++
+  - Cost          ---
+  - Simplicity    ---
+  - Scalability   +++
+
+- Vertical Slice Architecture
+  - Maintaniblity +
+  - Testability   +
+  - Cost          +
+  - Simplicity    +++
+  - Scalability   --
+
+Why Vertical Slice Architecture?
+- It is a very good fit in agile environment, working on US and you want to interate and deply fast.
+- Feature can be developed and tested separtely than the others. -> Big advantage
