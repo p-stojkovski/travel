@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "wA1i8hu+5v3TwH/LUZnamfFrR0rxlRPt5smj0UPyJl8s7gpFc4ia3VQGnpJSM15zRcM6vZWnUWGh0jstj2op2Q==",
+  "success": true,
+  "projectFilePath": "C:\\Projects\\travel\\TravelInspiration.API\\TravelInspiration.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\petar\\.nuget\\packages\\polly\\8.3.0\\polly.8.3.0.nupkg.sha512",
+    "C:\\Users\\petar\\.nuget\\packages\\polly.core\\8.3.0\\polly.core.8.3.0.nupkg.sha512"
+  ],
+  "logs": []
+}
