@@ -8,12 +8,21 @@ public static class SearchDestinations
     {
         app.MapGet("api/destinations", async (string? searchFor,
             ILoggerFactory logger,
+            CancellationToken cancellationToken,
             IDestinationSearchApiClient destinationSearchClient) =>
         {
             logger.CreateLogger("EndpointHandlers")
                 .LogInformation("SearchDestionations feature called");
 
-            var result = await destinationSearchClient.GetDestinationsAsync(searchFor, null);
+            var resultFromApiCall = await destinationSearchClient
+                .GetDestinationsAsync(searchFor, cancellationToken);
+
+            var result = resultFromApiCall.Select(x => new
+            {
+                x.Name,
+                x.Description,
+                x.ImageUri
+            });
 
             return Results.Ok(result);
         });
