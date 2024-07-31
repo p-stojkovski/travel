@@ -1,4 +1,4 @@
-# From Zero to Hero: Vertical Slice Architecture
+# Vertical Slice Architecture - POC
 
 ### Introducing Vertical Slice Architecture
 - Architectual style in which organisation of your code is based on your system use cases(features).
