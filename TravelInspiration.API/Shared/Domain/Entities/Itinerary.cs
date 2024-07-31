@@ -6,5 +6,5 @@ public sealed class Itinerary(string name, string userId) : AuditableEntity
     public string Name { get; set; } = name;
     public string? Description { get; set; }
     public string UserId { get; set; } = userId;
-    public ICollection<Stop> Stop { get; set; } = [];
+    public ICollection<Stop> Stops { get; set; } = [];
 }
