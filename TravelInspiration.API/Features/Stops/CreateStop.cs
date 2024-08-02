@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TravelInspiration.API.Shared.Domain.Entities;
@@ -32,6 +33,20 @@ public sealed class CreateStop : ISlice
         public int ItineraryId { get; set; } = itineraryId;
         public string Name { get; } = name;
         public string? ImageUri { get; } = imageUri;
+    }
+
+    public sealed class CreateStopCommandValidator : AbstractValidator<CreateStopCommand>
+    {
+        public CreateStopCommandValidator()
+        {
+            RuleFor(v => v.Name)
+                .MaximumLength(200)
+                .NotEmpty();
+            RuleFor(v => v.ImageUri)
+                .Must(ImageUri => Uri.TryCreate(ImageUri ?? "", UriKind.Absolute, out _))
+                .When(v => !string.IsNullOrEmpty(v.ImageUri))
+                .WithMessage("ImageUri must be a valid Uri.");
+        }
     }
 
     public sealed class CreateStopCommandHandler(TravelInspirationDbContext dbContext,

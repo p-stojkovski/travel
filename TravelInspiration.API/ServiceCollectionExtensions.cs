@@ -5,6 +5,7 @@ using System.Reflection;
 using TravelInspiration.API.Shared.Slices;
 using TravelInspiration.API.Shared.Behaviours;
 using TravelInspiration.API.Shared.Metrics;
+using FluentValidation;
 
 namespace TravelInspiration.API;
 
@@ -21,9 +22,11 @@ public static class ServiceCollectionExtensions
         {
             x.RegisterServicesFromAssembly(currentAssembly)
                 .AddOpenRequestPreProcessor(typeof(LoggingBehaviour<>))
+                .AddOpenBehavior(typeof(ModelValidationBehaviour<,>))
                 .AddOpenBehavior(typeof(HandlerPerformanceMetricBehaviour<,>));
         });
 
+        services.AddValidatorsFromAssembly(currentAssembly);
         services.AddSingleton<HandlerPerformanceMetric>();
 
         return services;
