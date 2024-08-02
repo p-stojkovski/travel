@@ -22,3 +22,15 @@ Accept: application/json
 
 GET {{HostAddressRoot}}/api/itineraries/11111
 Accept: application/json
+
+
+### 
+
+POST {{HostAddressRoot}}/api/itineraries/1/stops
+Accept: application/json
+Content-type: application/json
+
+{
+    "name": "A stop for testing",
+    "imageUri": "https://localhost:7293/images/1.jpg"
+}
