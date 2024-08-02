@@ -3,6 +3,7 @@ using TravelInspiration.API.Shared.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using TravelInspiration.API.Shared.Slices;
+using TravelInspiration.API.Shared.Behaviours;
 
 namespace TravelInspiration.API;
 
@@ -17,7 +18,8 @@ public static class ServiceCollectionExtensions
         services.AddAutoMapper(currentAssembly);
         services.AddMediatR(x =>
         {
-            x.RegisterServicesFromAssembly(currentAssembly);
+            x.RegisterServicesFromAssembly(currentAssembly)
+            .AddOpenRequestPreProcessor(typeof(LoggingBehaviour<>));
         });
 
         return services;

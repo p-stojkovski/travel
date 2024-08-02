@@ -12,13 +12,9 @@ public sealed class GetItineraries : ISlice
     public void AddEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
     {
         endpointRouteBuilder.MapGet("api/itineraries", async (string? searchFor, 
-            ILoggerFactory loggerFactory,
             IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            loggerFactory.CreateLogger("EndpointHandlers")
-                .LogInformation("GetItineraries feature called");
-
             return await mediator.Send(new GetItinerariesQuery(searchFor), cancellationToken);
         });
     }

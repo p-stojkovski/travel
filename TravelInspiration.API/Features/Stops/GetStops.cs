@@ -14,19 +14,15 @@ public sealed class GetStops : ISlice
         endpointRouteBuilder.MapGet(
             "api/itineraries/{itineraryId}/stops",
             async (int itineraryId,
-                ILoggerFactory logger,
                 IMediator mediator,
                 CancellationToken cancellationToken) =>
             {
-                logger.CreateLogger("EndpointHandlers")
-                    .LogInformation("GetStops feature called.");
-
                 return await mediator.Send(new GetStopsQuery(itineraryId), cancellationToken);
             });
     }
 
-    public sealed class GetStopsQuery(int iteneraryId) : IRequest<IResult> 
-    { 
+    public sealed class GetStopsQuery(int iteneraryId) : IRequest<IResult>
+    {
         public int ItineraryId { get; } = iteneraryId;
     }
 
@@ -42,7 +38,7 @@ public sealed class GetStops : ISlice
                 .Include(i => i.Stops)
                 .FirstOrDefaultAsync(i => i.Id == request.ItineraryId, cancellationToken);
 
-            if (itinerary is null) 
+            if (itinerary is null)
             {
                 return Results.NotFound();
             }
@@ -64,7 +60,7 @@ public sealed class GetStops : ISlice
     {
         public StopMapProfile()
         {
-            CreateMap<Stop, StopDto>();    
+            CreateMap<Stop, StopDto>();
         }
     }
 }
