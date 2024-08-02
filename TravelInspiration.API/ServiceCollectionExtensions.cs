@@ -11,7 +11,12 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IDestinationSearchApiClient, DestinationSearchApiClient>();
 
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        var currentAssembly = Assembly.GetExecutingAssembly();
+        services.AddAutoMapper(currentAssembly);
+        services.AddMediatR(x =>
+        {
+            x.RegisterServicesFromAssembly(currentAssembly);
+        });
 
         return services;
     }
