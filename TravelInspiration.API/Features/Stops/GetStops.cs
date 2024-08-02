@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TravelInspiration.API.Shared.Domain.Entities;
 using TravelInspiration.API.Shared.Persistence;
@@ -13,24 +14,41 @@ public static class GetStops
             "api/itineraries/{itineraryId}/stops",
             async (int itineraryId,
                 ILoggerFactory logger,
-                TravelInspirationDbContext dbContext,
-                IMapper mapper,
+                IMediator mediator,
                 CancellationToken cancellationToken) =>
             {
                 logger.CreateLogger("EndpointHandlers")
                     .LogInformation("GetStops feature called.");
 
-                var itinerary = await dbContext.Itineraries
-                    .Include(i => i.Stops)
-                    .FirstOrDefaultAsync(i => i.Id == itineraryId, cancellationToken);
-
-                if (itinerary == null)
-                {
-                    return Results.NotFound();
-                }
-
-                return Results.Ok(mapper.Map<IEnumerable<StopDto>>(itinerary.Stops));
+                return await mediator.Send(new GetStopsQuery(itineraryId), cancellationToken);
             });
+    }
+
+    public sealed class GetStopsQuery(int iteneraryId) : IRequest<IResult> 
+    { 
+        public int ItineraryId { get; } = iteneraryId;
+    }
+
+    public sealed class GetStopsQueryHandler(TravelInspirationDbContext dbContext, IMapper mapper)
+        : IRequestHandler<GetStopsQuery, IResult>
+    {
+        private readonly TravelInspirationDbContext _dbContext = dbContext;
+        private readonly IMapper _mapper = mapper;
+
+        public async Task<IResult> Handle(GetStopsQuery request, CancellationToken cancellationToken)
+        {
+            var itinerary = await _dbContext.Itineraries
+                .Include(i => i.Stops)
+                .FirstOrDefaultAsync(i => i.Id == request.ItineraryId, cancellationToken);
+
+            if (itinerary is null) 
+            {
+                return Results.NotFound();
+            }
+
+            return Results.Ok(_mapper.Map<IEnumerable<StopDto>>(itinerary.Stops));
+        }
+
     }
 
     public sealed class StopDto
