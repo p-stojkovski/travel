@@ -34,6 +34,7 @@ public sealed class GetItineraries : ISlice
             CancellationToken cancellationToken)
         {
             var itineraries = await _dbContext.Itineraries
+                .AsNoTracking()
                 .Where(x => request.SearchFor == null
                     || x.Name.Contains(request.SearchFor)
                     || (x.Description != null && x.Description.Contains(request.SearchFor)))
