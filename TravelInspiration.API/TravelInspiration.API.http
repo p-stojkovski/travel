@@ -15,5 +15,10 @@ Accept: application/json
 
 ### 
 
+GET {{HostAddressRoot}}/api/itineraries/1/stops
+Accept: application/json
+
+### 
+
 GET {{HostAddressRoot}}/api/itineraries/11111
 Accept: application/json

@@ -7,6 +7,19 @@ namespace TravelInspiration.API.Features.Itineraries;
 
 public static class GetItineraries
 {
+    public class GetItinerariesQuery
+    {
+        public string? SearchFor { get; set; }
+    }
+
+    public class GetItinerariesQueryHandler
+    {
+        private readonly TravelInspirationDbContext _dbContext;
+        private readonly IMapper _mapper;
+    }
+
+    public class GetItinerariesResponse { }
+
     public static void AddEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("api/itineraries", async (string? searchFor, 
