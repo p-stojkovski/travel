@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TravelInspiration.API.Shared.Domain.Entities;
 using TravelInspiration.API.Shared.Persistence;
@@ -7,38 +8,42 @@ namespace TravelInspiration.API.Features.Itineraries;
 
 public static class GetItineraries
 {
-    public class GetItinerariesQuery
-    {
-        public string? SearchFor { get; set; }
-    }
-
-    public class GetItinerariesQueryHandler
-    {
-        private readonly TravelInspirationDbContext _dbContext;
-        private readonly IMapper _mapper;
-    }
-
-    public class GetItinerariesResponse { }
-
     public static void AddEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("api/itineraries", async (string? searchFor, 
-            ILoggerFactory loggerFactory, 
-            TravelInspirationDbContext dbContext,
-            IMapper mapper,
+            ILoggerFactory loggerFactory,
+            IMediator mediator,
             CancellationToken cancellationToken) =>
         {
             loggerFactory.CreateLogger("EndpointHandlers")
                 .LogInformation("GetItineraries feature called");
 
-            var result = await dbContext.Itineraries
-                .Where(x => searchFor == null 
-                    || x.Name.Contains(searchFor)
-                    || (x.Description != null && x.Description.Contains(searchFor)))
+            return await mediator.Send(new GetItinerariesQuery(searchFor), cancellationToken);
+        });
+    }
+
+    public sealed class GetItinerariesQuery(string? searchFor) : IRequest<IResult>
+    {
+        public string? SearchFor { get; } = searchFor;
+    }
+
+    public class GetItinerariesQueryHandler(TravelInspirationDbContext dbContext, IMapper mapper)
+        : IRequestHandler<GetItinerariesQuery, IResult>
+    {
+        private readonly TravelInspirationDbContext _dbContext = dbContext;
+        private readonly IMapper _mapper = mapper;
+
+        public async Task<IResult> Handle(GetItinerariesQuery request, 
+            CancellationToken cancellationToken)
+        {
+            var itineraries = await _dbContext.Itineraries
+                .Where(x => request.SearchFor == null
+                    || x.Name.Contains(request.SearchFor)
+                    || (x.Description != null && x.Description.Contains(request.SearchFor)))
                 .ToListAsync(cancellationToken);
 
-            return Results.Ok(mapper.Map<IEnumerable<ItineraryDto>>(result));
-        });
+            return Results.Ok(_mapper.Map<IEnumerable<ItineraryDto>>(itineraries));
+        }
     }
 
     public sealed class ItineraryDto
