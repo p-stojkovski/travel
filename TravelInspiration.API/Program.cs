@@ -5,6 +5,7 @@ using TravelInspiration.API.Features.Itineraries;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
+builder.Services.AddProblemDetails();
 builder.Services.AddHttpClient();
    
 builder.Services.RegisterApplicationServices();
