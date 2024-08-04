@@ -2,7 +2,7 @@
 
 namespace TravelInspiration.API.Features.Itineraries;
 
-public sealed class CreateItinerary : ISlice
+public sealed class CreateItineraryWithStops : ISlice
 {
     public void AddEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
     {

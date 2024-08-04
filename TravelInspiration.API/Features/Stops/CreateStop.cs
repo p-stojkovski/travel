@@ -24,7 +24,7 @@ public sealed class CreateStop : ISlice
 
                 return await mediator.Send(request, cancellationToken);
             }
-        );
+        ).RequireAuthorization(); ;
     }
 
     public sealed class CreateStopCommand(int itineraryId,

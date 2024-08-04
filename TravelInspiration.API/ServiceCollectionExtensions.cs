@@ -6,6 +6,7 @@ using TravelInspiration.API.Shared.Slices;
 using TravelInspiration.API.Shared.Behaviours;
 using TravelInspiration.API.Shared.Metrics;
 using FluentValidation;
+using TravelInspiration.API.Shared.Security;
 
 namespace TravelInspiration.API;
 
@@ -28,6 +29,8 @@ public static class ServiceCollectionExtensions
 
         services.AddValidatorsFromAssembly(currentAssembly);
         services.AddSingleton<HandlerPerformanceMetric>();
+
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
 
         return services;
     }

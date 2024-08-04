@@ -25,7 +25,7 @@ public sealed class UpdateStop : ISlice
                 request.StopId = stopId;
 
                 return await mediator.Send(request, cancellationToken);
-            });
+            }).RequireAuthorization(); ;
     }
 
     public sealed class UpdateStopCommand : IRequest<IResult>
