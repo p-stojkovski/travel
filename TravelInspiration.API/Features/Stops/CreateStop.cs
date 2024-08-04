@@ -5,12 +5,15 @@ using Microsoft.EntityFrameworkCore;
 using TravelInspiration.API.Shared.Domain.Entities;
 using TravelInspiration.API.Shared.Domain.Events;
 using TravelInspiration.API.Shared.Persistence;
+using TravelInspiration.API.Shared.Security;
 using TravelInspiration.API.Shared.Slices;
 
 namespace TravelInspiration.API.Features.Stops;
 
 public sealed class CreateStop : ISlice
 {
+    // "scope" : "write" or "scope" : ["read", "write", ....] 
+
     public void AddEndpoint(IEndpointRouteBuilder endpointRouteBuilder)
     {
         endpointRouteBuilder.MapPost(
@@ -24,7 +27,7 @@ public sealed class CreateStop : ISlice
 
                 return await mediator.Send(request, cancellationToken);
             }
-        ).RequireAuthorization(); ;
+        ).RequireAuthorization(AuthorizationPolicies.HasWriteActionPolicy);
     }
 
     public sealed class CreateStopCommand(int itineraryId,
