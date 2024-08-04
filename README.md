@@ -78,3 +78,6 @@ Tradeoffs:
 Why Vertical Slice Architecture?
 - It is a very good fit in agile environment, working on US and you want to interate and deploy fast.
 - Feature can be developed and tested separtely than the others. -> Big advantage
+
+### Commands
+- add-migration -namespace TravelInspiration.API.Shared.Persistence.Migrations -project TravelInspiration.API outputdir Shared/Persistence/Migrations
