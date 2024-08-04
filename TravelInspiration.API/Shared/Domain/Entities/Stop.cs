@@ -22,4 +22,13 @@ public sealed class Stop(string name) : AuditableEntity, IHasDomainEvent
 
         DomainEvents.Add(new StopCreatedEvent(this));
     }
+
+    public void HandleUpdateCommand(UpdateStop.UpdateStopCommand updateStopCommand)
+    {
+        Name = updateStopCommand.Name;
+        ImageUri = updateStopCommand.ImageUri == null ? null : new Uri(updateStopCommand.ImageUri);
+        Suggested = updateStopCommand.Suggested;
+
+        DomainEvents.Add(new StopUpdatedEvent(this));
+    }
 }
