@@ -79,6 +79,12 @@ Why Vertical Slice Architecture?
 - It is a very good fit in agile environment, working on US and you want to interate and deploy fast.
 - Feature can be developed and tested separtely than the others. -> Big advantage
 
+### Scalability in Vertical Slice Architecture
+- Scalability refers to the ability to a system to handle increased demand without compromising performance or aviability.
+- Scalability is devided in horizontal and vertical scaling
+- Affects team processes
+- Requires iteratative improvments
+
 ### Commands
 - add-migration -namespace TravelInspiration.API.Shared.Persistence.Migrations -project TravelInspiration.API outputdir Shared/Persistence/Migrations
 - dotnet user-jwts create --audience travelinspiration-api
