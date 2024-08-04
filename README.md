@@ -81,3 +81,4 @@ Why Vertical Slice Architecture?
 
 ### Commands
 - add-migration -namespace TravelInspiration.API.Shared.Persistence.Migrations -project TravelInspiration.API outputdir Shared/Persistence/Migrations
+- dotnet user-jwts create --audience travelinspiration-api
